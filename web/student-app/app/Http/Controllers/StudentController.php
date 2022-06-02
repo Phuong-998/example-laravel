@@ -34,14 +34,23 @@ class StudentController extends Controller
 
     public function hadnelAdd(Request $request)
     {
-        $name = $request->input('name');
-        $age = $request->input('age');
-        $address = $request->input('address');
-        $phone = $request->input('phone');
-        $monhoc = $request->input('monhoc');
-        $lop = $request->input('lop');
+        
+        // $name = $request->input('name');
+        // $age = $request->input('age');
+        // $address = $request->input('address');
+        // $phone = $request->input('phone');
+        // $monhoc = $request->input('monhoc');
+        // $lop = $request->input('lop');
 
-        $this->studentRepo->add($name,$age,$address,$phone,$monhoc,$lop);
+        $data = [
+            'name'=>$request->input('name'),
+            'age'=>$request->input('age'),
+            'address'=>$request->input('address'),
+            'phone'=>$request->input('phone'),
+            'monhoc'=>$request->input('monhoc'),
+            'lop'=>$request->input('lop')
+        ];
+        $this->studentRepo->add($data);
 
         return redirect()->route('admin.sinhvien');
     }

@@ -10,18 +10,19 @@ class StudentRepo
         return DB::table('sinhvien')
         ->join('lop', 'sinhvien.id_lop', '=', 'lop.id')
         ->join('monhoc', 'sinhvien.id_monhoc', '=', 'monhoc.id')
+        ->select('sinhvien.*', 'lop.nameClass', 'monhoc.nameSub')
         ->get();
     }
 
-    public function add($name,$age,$address,$phone,$monhoc,$lop)
+    public function add($data = [])
     {
         return DB::table('sinhvien')->insert([
-            'name' => $name,
-            'age' => $age,
-            'address' => $address,
-            'phone' => $phone,
-            'id_monhoc' =>$monhoc,
-            'id_lop' =>$lop
+            'name' => $data['name'],
+            'age' => $data['age'],
+            'address' => $data['address'],
+            'phone' => $data['phone'],
+            'id_monhoc' =>$data['monhoc'],
+            'id_lop' =>$data['lop']
         ]);
     }
 
