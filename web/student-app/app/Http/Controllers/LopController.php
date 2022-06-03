@@ -17,6 +17,7 @@ class LopController extends Controller
     public function index()
     {
         $result = $this->lopRepo->all();
+        dd($result);
         return view('lop.index',['result'=>$result]);
     }
 

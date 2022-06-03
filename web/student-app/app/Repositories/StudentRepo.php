@@ -16,14 +16,7 @@ class StudentRepo
 
     public function add($data = [])
     {
-        return DB::table('sinhvien')->insert([
-            'name' => $data['name'],
-            'age' => $data['age'],
-            'address' => $data['address'],
-            'phone' => $data['phone'],
-            'id_monhoc' =>$data['monhoc'],
-            'id_lop' =>$data['lop']
-        ]);
+        return DB::table('sinhvien')->insert($data);
     }
 
     public function getId($id)
@@ -39,16 +32,9 @@ class StudentRepo
         
     }
 
-    public function update($id,$name,$age,$address,$phone,$monhoc,$lop)
+    public function update($data = [])
     {
-       return DB::table('sinhvien')->where('id', $id)->update([
-            'name' => $name,
-            'age' => $age,
-            'address' => $address,
-            'phone' => $phone,
-            'id_monhoc' =>$monhoc,
-            'id_lop' =>$lop
-        ]);
+       return DB::table('sinhvien')->where('id',$data['id'])->update($data);
     }
 
     public function delete($id)

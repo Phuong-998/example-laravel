@@ -34,21 +34,13 @@ class StudentController extends Controller
 
     public function hadnelAdd(Request $request)
     {
-        
-        // $name = $request->input('name');
-        // $age = $request->input('age');
-        // $address = $request->input('address');
-        // $phone = $request->input('phone');
-        // $monhoc = $request->input('monhoc');
-        // $lop = $request->input('lop');
-
         $data = [
             'name'=>$request->input('name'),
             'age'=>$request->input('age'),
             'address'=>$request->input('address'),
             'phone'=>$request->input('phone'),
-            'monhoc'=>$request->input('monhoc'),
-            'lop'=>$request->input('lop')
+            'id_monhoc'=>$request->input('monhoc'),
+            'id_lop'=>$request->input('lop')
         ];
         $this->studentRepo->add($data);
 
@@ -66,15 +58,18 @@ class StudentController extends Controller
 
     public function hadnelUpdate(Request $request)
     {
-        $id = $request->input('id');
-        $name = $request->input('name');
-        $age = $request->input('age');
-        $address = $request->input('address');
-        $phone = $request->input('phone');
-        $monhoc = $request->input('monhoc');
-        $lop = $request->input('lop');
+        $data = [
+            'id' => $request->input('id'),
+            'name' => $request->input('name'),
+            'age' => $request->input('age'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'id_monhoc' => $request->input('monhoc'),
+            'id_lop' => $request->input('lop')
+        ];
+        
 
-        $this->studentRepo->update($id,$name,$age,$address,$phone,$monhoc,$lop);
+        $this->studentRepo->update($data);
 
         return redirect()->route('admin.sinhvien');
     }

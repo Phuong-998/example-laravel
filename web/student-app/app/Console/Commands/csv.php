@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Repositories\StudentRepo;
+use Illuminate\Support\Facades\DB;
 use App\Models\sinhvien;
 
 class csv extends Command
@@ -27,17 +29,27 @@ class csv extends Command
      *
      * @return int
      */
+    protected $studentRepo;
     public function handle()
     {
-        $path = base_path().'/public/data.csv';
+        $this->studentRepo = new StudentRepo();
+        $path = base_path().'/public/test.csv';
         if(file_exists($path)){
+            $data = '';
             $file = new \SplFileObject($path);
             $file->setFlags(\SplFileObject::READ_CSV);
-            foreach ($file as $fields) {
-                list($name,$age,$address,$sdt,$id_monhoc,$id_lop) = $fields;
-                sinhvien::create(['name'=>$name, 'age'=>$age, 'address'=>$address, 'phone'=>$sdt, 'id_monhoc'=>$id_monhoc, 'id_lop'=>$id_lop]);
+            foreach($file as $value){
+                $data = [
+                    'name' => $value[0],
+                    'age' => $value[1],
+                    'address' => $value[2],
+                    'phone' => $value[3],
+                    'id_monhoc' => $value[4],
+                    'id_lop' => $value[5]
+                ];
+                $insert[] = $data;
             }
-            print("Thanh Cong");
-        }
+            $this->studentRepo->add($insert);      
     }
+}
 }
