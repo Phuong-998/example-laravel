@@ -52,7 +52,7 @@ class csv extends Command
                 ]);
             }
             $collection = collect($data);
-            $insert1 = $collection->chunk(2);
+            $insert1 = $collection->chunk(1000);
             foreach($insert1->toArray() as $value){ 
                 $this->studentRepo->add($value); 
             }   
