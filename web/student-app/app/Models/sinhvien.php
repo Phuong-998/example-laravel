@@ -9,6 +9,6 @@ class sinhvien extends Model
 {
     use HasFactory;
     protected $table = 'sinhvien';
-    protected $fillable = ['id', 'name', 'age', 'address', 'phone', 'id_monhoc', 'id_lop'];
+    protected $fillable = ['name', 'age', 'address', 'phone', 'id_monhoc', 'id_lop'];
 
 }

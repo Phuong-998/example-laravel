@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
+use App\models\sinhvien;
 
 class StudentRepo
 {
@@ -16,6 +17,14 @@ class StudentRepo
 
     public function add($data = [])
     {
+        // return sinhvien::create([
+        //     'name' => $data['name'],
+        //     'age' => $data['age'],
+        //     'address' => $data['address'],
+        //     'phone' => $data['phone'],
+        //     'id_monhoc' => $data['monhoc'],
+        //     'id_lop' => $data['lop']
+        // ]);
         return DB::table('sinhvien')->insert($data);
     }
 

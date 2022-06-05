@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Repositories\StudentRepo;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\sinhvien;
 
@@ -30,26 +31,31 @@ class csv extends Command
      * @return int
      */
     protected $studentRepo;
+
     public function handle()
     {
         $this->studentRepo = new StudentRepo();
-        $path = base_path().'/public/test.csv';
+        $path = base_path().'/public/data2.csv';
         if(file_exists($path)){
-            $data = '';
+            $data = [];
             $file = new \SplFileObject($path);
             $file->setFlags(\SplFileObject::READ_CSV);
+            ini_set('memory_limit', '2048M');
             foreach($file as $value){
-                $data = [
+                array_push($data,[
                     'name' => $value[0],
                     'age' => $value[1],
                     'address' => $value[2],
                     'phone' => $value[3],
                     'id_monhoc' => $value[4],
                     'id_lop' => $value[5]
-                ];
-                $insert[] = $data;
+                ]);
             }
-            $this->studentRepo->add($insert);      
+            $collection = collect($data);
+            $insert1 = $collection->chunk(2);
+            foreach($insert1->toArray() as $value){ 
+                $this->studentRepo->add($value); 
+            }   
     }
 }
 }

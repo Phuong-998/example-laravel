@@ -22,6 +22,7 @@ class StudentController extends Controller
     public function index()
     {
         $result = $this->studentRepo->all();
+        dd($result);
         return view('student.index',['result'=>$result]);
     }
 
@@ -34,14 +35,7 @@ class StudentController extends Controller
 
     public function hadnelAdd(Request $request)
     {
-        $data = [
-            'name'=>$request->input('name'),
-            'age'=>$request->input('age'),
-            'address'=>$request->input('address'),
-            'phone'=>$request->input('phone'),
-            'id_monhoc'=>$request->input('monhoc'),
-            'id_lop'=>$request->input('lop')
-        ];
+        $data = $request->all();
         $this->studentRepo->add($data);
 
         return redirect()->route('admin.sinhvien');
