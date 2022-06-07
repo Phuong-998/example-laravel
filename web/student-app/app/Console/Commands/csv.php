@@ -48,7 +48,19 @@ class csv extends Command
                     'address' => $value[2],
                     'phone' => $value[3],
                     'id_monhoc' => $value[4],
-                    'id_lop' => $value[5]
+                    'id_lop' => $value[5],
+                    // 'avt' => $value[6],
+                    // 'a' => $value[7],
+                    // 'b' => $value[8],
+                    // 'c' => $value[9],
+                    // 'd' => $value[10],
+                    // 'abg' => $value[11],
+                    // 'qua' => $value[12],
+                    // 'nvb' => $value[13],
+                    // 'xc' => $value[14],
+                    // 'za' => $value[15],
+                    // 'vb' => $value[16],
+                    // 'ff' => $value[17]
                 ]);
             }
             $collection = collect($data);

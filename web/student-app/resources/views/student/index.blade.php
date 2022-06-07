@@ -6,6 +6,7 @@
     <tr>
         <th>Id</th>
         <th>Tên sinh viên </th>
+        <th>Hình ảnh</th>
         <th>Tuổi</th>
         <th>Môn học</th>
         <th>Lớp</th>
@@ -20,6 +21,7 @@
         <tr>
             <td>{{ $result->id }}</td>
             <td>{{ $result->name }}</td>
+            <td><img src="{{ asset('resize/100x100/'.$result->imgae) }}" alt=""></td>
             <td>{{ $result->age }}</td>
             <td>{{ $result->nameSub }}</td>
             <td>{{ $result->nameClass }}</td>

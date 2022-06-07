@@ -2,10 +2,12 @@
 @section('conten')
 <div class="row">
     <div class="col-6">
-        <form action="{{ route('admin.hadnelAdd-sinhvien') }}" method="post" class="form-group offset-1">
+        <form action="{{ route('admin.hadnelAdd-sinhvien') }}" method="post" enctype="multipart/form-data" class="form-group offset-1">
             @csrf
             <label for="">Tên sinh viên</label>
             <input type="text" name="name" class="form-control">
+            <label for="">Ảnh</label>
+            <input type="file" name="image" id="" class="form-control">
             <label for="">Tuổi</label>
             <input type="number" name="age" id="" class="form-control">
             <label for="">Địa chỉ</label>

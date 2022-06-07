@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\StudentRepo;
 use App\Repositories\MonhocRepo;
 use App\Repositories\lopRepo;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class StudentController extends Controller
 {
@@ -22,7 +23,6 @@ class StudentController extends Controller
     public function index()
     {
         $result = $this->studentRepo->all();
-        dd($result);
         return view('student.index',['result'=>$result]);
     }
 
@@ -35,9 +35,22 @@ class StudentController extends Controller
 
     public function hadnelAdd(Request $request)
     {
-        $data = $request->all();
+        $image = $request->file('image');
+        $data = [
+            'name' => $request->input('name'),
+            'age' => $request->input('age'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'id_monhoc' => $request->input('monhoc'),
+            'id_lop' => $request->input('lop'),
+            'imgae' => $image->getClientOriginalName()
+        ];
         $this->studentRepo->add($data);
-
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(100, 100)->save(public_path('resize/100x100/'.$data['imgae']));
+        $image_resize->resize(300, 450)->save(public_path('resize/350x450/'.$data['imgae']));
+        $image_resize->resize(1080, 768)->save(public_path('resize/1080x768/'.$data['imgae']));
+        $image->move('storage/images',$data['imgae']);
         return redirect()->route('admin.sinhvien');
     }
 
