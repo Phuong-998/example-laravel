@@ -13,6 +13,7 @@ class StudentController extends Controller
     protected $studentRepo;
     protected $lophocRepo;
     protected $monhocRepo;
+    protected $sizeImgRepo;
 
     public function __construct(StudentRepo $studentRepo, MonhocRepo $monhocRepo, lopRepo $lophocRepo)
     {
@@ -45,11 +46,16 @@ class StudentController extends Controller
             'id_lop' => $request->input('lop'),
             'imgae' => $image->getClientOriginalName()
         ];
-        $this->studentRepo->add($data);
+        $id = $this->studentRepo->add($data);
         $image_resize = Image::make($image->getRealPath());
-        $image_resize->resize(100, 100)->save(public_path('resize/100x100/'.$data['imgae']));
-        $image_resize->resize(300, 450)->save(public_path('resize/350x450/'.$data['imgae']));
-        $image_resize->resize(1080, 768)->save(public_path('resize/1080x768/'.$data['imgae']));
+        $resize = [
+            '100x100' => $image_resize->resize(100, 100)->save(public_path('resize/100x100/'.$data['imgae']))->basename,
+            '350x450' => $image_resize->resize(300, 450)->save(public_path('resize/350x450/'.$data['imgae']))->basename,
+            '1080x768' => $image_resize->resize(1080, 768)->save(public_path('resize/1080x768/'.$data['imgae']))->basename
+        ];
+        foreach($resize as $key => $value){
+            $this->studentRepo->addImg($id,$value,$key);
+        }
         $image->move('storage/images',$data['imgae']);
         return redirect()->route('admin.sinhvien');
     }
@@ -86,6 +92,20 @@ class StudentController extends Controller
         $id = $request->id;
         $this->studentRepo->delete($id);
         return redirect()->route('admin.sinhvien');
+    }
+
+    public function detail(Request $request)
+    {
+        $id = $request->id;
+        $data = $this->studentRepo->getId($id);
+        return view('student.detail', ['sinhvien' => $data['sinhvien'], 'img' => $data['imgSize']]);
+    }
+
+    public function getImgSize(Request $request)
+    {
+        $id = $request->id;
+        $img = $this->studentRepo->getImgSize($id);
+        return $img;
     }
     //
 }

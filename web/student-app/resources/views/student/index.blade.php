@@ -20,7 +20,7 @@
     @foreach ($result as $result )    
         <tr>
             <td>{{ $result->id }}</td>
-            <td>{{ $result->name }}</td>
+            <td><a href="{{ route('admin.detail-sinhvien',['id' => $result->id]) }}">{{ $result->name }}</a></td>
             <td><img src="{{ asset('resize/100x100/'.$result->imgae) }}" alt=""></td>
             <td>{{ $result->age }}</td>
             <td>{{ $result->nameSub }}</td>
@@ -29,7 +29,6 @@
             <td>{{ $result->address }}</td>
             <td><a href="{{ route('admin.update-sinhvien',['id'=>$result->id]) }}" class="btn btn-primary">Sửa</a></td>
             <td><a href="{{ route('admin.delete-sinhvien', ['id' =>$result->id]) }}"  class="btn btn-danger">Xóa</a></td>
-
         </tr>
     @endforeach
 </tbody>

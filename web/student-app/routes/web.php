@@ -38,4 +38,6 @@ Route::prefix('/admin')->as('admin.')->group(function(){
     Route::get('/update-sinhvien',[StudentController::class,'update'])->name('update-sinhvien');
     Route::post('/hadnel-updatesinhvien',[StudentController::class,'hadnelUpdate'])->name('hadnel-updatesinhvien');
     Route::get('/delete-sinhvien',[StudentController::class,'delete'])->name('delete-sinhvien');
+    Route::get('/detail-sinhvien',[StudentController::class,'detail'])->name('detail-sinhvien');
+    Route::get('/detail-getImgSize',[StudentController::class,'getImgSize'])->name('detail-getImgSize');
 });

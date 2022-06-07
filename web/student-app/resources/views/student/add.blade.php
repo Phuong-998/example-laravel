@@ -7,7 +7,8 @@
             <label for="">Tên sinh viên</label>
             <input type="text" name="name" class="form-control">
             <label for="">Ảnh</label>
-            <input type="file" name="image" id="" class="form-control">
+            <input type="file" name="image" id="" onchange="preview(this)" class="form-control">
+            <div><img id="thumb" src="" width="150px"/></div>
             <label for="">Tuổi</label>
             <input type="number" name="age" id="" class="form-control">
             <label for="">Địa chỉ</label>
@@ -30,5 +31,12 @@
         </form>
     </div>
 </div>
-
+@push('javascripts')
+    <script>
+        function preview(input) {
+            thumb.src=URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+@endpush
 @endsection
+

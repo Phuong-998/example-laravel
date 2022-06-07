@@ -25,7 +25,7 @@ class StudentRepo
     //         'id_monhoc' => $data['monhoc'],
     //         'id_lop' => $data['lop']
     //     ]);
-        return DB::table('sinhvien')->insert($data);
+        return $id = DB::table('sinhvien')->insertGetId($data);
     }
 
     public function getId($id)
@@ -33,10 +33,12 @@ class StudentRepo
         $sinhvien = DB::table('sinhvien')->where('id',$id)->get()->first();
         $monhoc = DB::table('monhoc')->where('id',$sinhvien->id_monhoc)->get()->first();
         $lop = DB::table('lop')->where('id',$sinhvien->id_lop)->get()->first();
+        $imgSize = DB::table('size_img')->where('id_sinhvien',$id)->get();
         return $info = [
-            'sinhvien'=>$sinhvien,
-             'monhoc'=>$monhoc,
-             'lop'=>$lop
+            'sinhvien' => $sinhvien,
+             'monhoc' => $monhoc,
+             'lop' => $lop,
+             'imgSize' => $imgSize
         ];
         
     }
@@ -49,5 +51,19 @@ class StudentRepo
     public function delete($id)
     {
         return DB::table('sinhvien')->where('id',$id)->delete();
+    }
+
+    public function addImg($id,$img,$des)
+    {
+        return DB::table('size_Img')->insert([
+            'id_sinhvien' => $id,
+            'img' => $img,
+            'des' => $des
+        ]);
+    }
+
+    public function getImgSize($id)
+    {
+        return DB::table('size_Img')->where('id',$id)->get()->first();
     }
 }
