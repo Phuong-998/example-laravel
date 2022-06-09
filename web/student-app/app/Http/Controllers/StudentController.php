@@ -98,7 +98,11 @@ class StudentController extends Controller
     {
         $id = $request->id;
         $data = $this->studentRepo->getId($id);
-        return view('student.detail', ['sinhvien' => $data['sinhvien'], 'img' => $data['imgSize']]);
+        return view('student.detail', ['sinhvien' => $data['sinhvien'], 
+                                        'img' => $data['imgSize'], 
+                                        'lop' => $data['lop'],
+                                         'monhoc' => $data['monhoc']
+                                    ]);
     }
 
     public function getImgSize(Request $request)

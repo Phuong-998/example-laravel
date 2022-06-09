@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\LopApiController;
+use App\Http\Controllers\Api\StudentApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::prefix('api-admin')->group(function(){
+    Route::get('sinhvien',[StudentApiController::class,'index']);
+    Route::get('update-sinhvien/{id}',[StudentApiController::class,'show']);
+    Route::post('add-sinhvien',[StudentApiController::class,'store']);
+    Route::delete('delete-sinhvien/{id}',[StudentApiController::class,'destroy']);
 });
+

@@ -13,7 +13,13 @@
     {{-- @foreach ($img as $value )
         <img src="{{ asset('resize/'. $value->des . '/' . $value->img) }}" alt="">
     @endforeach --}}
-    <img src="{{ asset('storage/images/'.$sinhvien->imgae) }}" alt=""  id="imgSize">
+    <img src="{{ asset('storage/images/'.$sinhvien->imgae) }}" alt=""  id="imgSize"><br>
+    <label for="">Họ tên: {{ $sinhvien->name }}</label><br>
+    <label for="">Họ tên: {{ $sinhvien->age }}</label><br>
+    <label for="">Họ tên: {{ $sinhvien->address }}</label><br>
+    <label for="">Họ tên: {{ $sinhvien->phone }}</label><br>
+    <label for="">Họ tên: {{ $lop->nameClass }}</label><br>
+    <label for="">Họ tên: {{ $monhoc->nameSub }}</label>
     @push('javascripts')
         <script>
             $("#changImg").change(function(){
