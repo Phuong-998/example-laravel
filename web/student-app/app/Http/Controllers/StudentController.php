@@ -11,18 +11,18 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class StudentController extends Controller
 {
-    protected $studentRepo;
+   
     protected $lophocRepo;
     protected $monhocRepo;
     protected $sizeImgRepo;
     protected $student;
 
-    public function __construct(StudentRepo $studentRepo, MonhocRepo $monhocRepo, lopRepo $lophocRepo, StudentApiController $student)
+    public function __construct(StudentApiController $student, MonhocRepo $monhocRepo, lopRepo $lophocRepo)
     {
-        $this->studentRepo = $studentRepo;
+        $this->student = $student;
         $this->monhocRepo = $monhocRepo;
         $this->lophocRepo = $lophocRepo;
-        $this->student = $student;
+        
     }
     public function index()
     {
