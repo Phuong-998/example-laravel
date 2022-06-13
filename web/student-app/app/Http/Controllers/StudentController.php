@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Repositories\StudentRepo;
 use App\Repositories\MonhocRepo;
@@ -11,23 +11,21 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class StudentController extends Controller
 {
-   
+    protected $studentRepo;
     protected $lophocRepo;
     protected $monhocRepo;
     protected $sizeImgRepo;
-    protected $student;
 
-    public function __construct(StudentApiController $student, MonhocRepo $monhocRepo, lopRepo $lophocRepo)
+    public function __construct(StudentRepo $studentRepo, MonhocRepo $monhocRepo, lopRepo $lophocRepo)
     {
-        $this->student = $student;
+        $this->studentRepo = $studentRepo;
         $this->monhocRepo = $monhocRepo;
         $this->lophocRepo = $lophocRepo;
-        
     }
     public function index()
     {
-        $result = $this->student->index();
-        return view('student.index',['result'=>$result]);
+        $result =  Http::get('http://localhost:8001/api-admin/sinhvien');
+        return view('student.index',['result'=>json_decode($result, true)]);
     }
 
     public function add()
@@ -40,7 +38,16 @@ class StudentController extends Controller
     public function hadnelAdd(Request $request)
     {
         $image = $request->file('imgae')->getClientOriginalName();
-        $id = $this->student->store($request);
+        $data = [
+            'name' => $request->name,
+            'age' => $request->age,
+            'address' => $request->address,
+            'phone' =>$request->phone,
+            'imgae' => $image,
+            'id_monhoc' => $request->id_monhoc,
+            'id_lop' => $request->id_lop
+        ];
+        $id = $this->studentRepo->add($data);
         $image_resize = Image::make($request->file('imgae')->getRealPath());
         $resize = [
             '100x100' => $image_resize->resize(100, 100)->save(public_path('resize/100x100/'.$image))->basename,
@@ -57,7 +64,7 @@ class StudentController extends Controller
     public function update(Request $request)
     {
         $id = $request->id;
-        $result = $this->student->show($id);
+        $result = $this->studentRepo->getId($id);
         $listmonhoc = $this->monhocRepo->all();
         $listlop = $this->lophocRepo->all();
         return view('student.update',['result'=>$result['sinhvien'],'monhoc'=>$result['monhoc'],'lop'=>$result['lop'],'listmonhoc'=>$listmonhoc,'listlop'=>$listlop]);
@@ -66,21 +73,21 @@ class StudentController extends Controller
     public function hadnelUpdate(Request $request)
     {
         $id = $request->input('id');
-        $this->student->update($request,$id);
+        $this->studentRepo->update($request,$id);
         return redirect()->route('admin.sinhvien');
     }
 
     public function delete(Request $request)
     {
         $id = $request->id;
-        $this->student->destroy($id);
+        $this->studentRepo->delete($id);
         return redirect()->route('admin.sinhvien');
     }
 
     public function detail(Request $request)
     {
         $id = $request->id;
-        $data = $this->student->show($id);
+        $data = $this->studentRepo->getId($id);
         return view('student.detail', ['sinhvien' => $data['sinhvien'], 
                                         'img' => $data['imgSize'], 
                                         'lop' => $data['lop'],

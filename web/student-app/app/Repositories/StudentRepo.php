@@ -25,6 +25,7 @@ class StudentRepo
     //         'id_monhoc' => $data['monhoc'],
     //         'id_lop' => $data['lop']
     //     ]);
+        
         return $id = DB::table('sinhvien')->insertGetId($data);
     }
 
