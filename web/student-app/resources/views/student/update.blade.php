@@ -14,14 +14,14 @@
             <label for="">SĐT</label>
             <input type="text" name="phone" id="" value="{{ $result->phone }}" class="form-control">
             <label for="">Môn học</label>
-            <select name="monhoc" id="" class="form-select">
+            <select name="id_monhoc" id="" class="form-select">
                 <option value="{{ $monhoc->id }}">{{ $monhoc->nameSub }}</option>
                 @foreach ($listmonhoc as $value )
                     <option value="{{ $value->id }}">{{ $value->nameSub }}</option>
                 @endforeach
             </select>
             <label for="">Lớp chuyên ngành</label>
-            <select name="lop" id="" class="form-select">
+            <select name="id_lop" id="" class="form-select">
                 <option value="{{ $lop->id }}">{{ $lop->nameClass }}</option>
                 @foreach ($listlop as $value )
                 <option value="{{ $value->id }}">{{ $value->nameClass }}</option>

@@ -32,8 +32,17 @@ class StudentApiController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->studentRepo->add($request->all());
-        return $this->studentRepo->getId($data);
+        $data = [
+            'name' => $request->name,
+            'age' => $request->age,
+            'imgae' => $request->imgae->getClientOriginalName(),
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'id_monhoc' => $request->id_monhoc,
+            'id_lop' => $request->id_lop
+        ];
+        return $this->studentRepo->add($data);
+        
         //
     }
 
@@ -58,6 +67,7 @@ class StudentApiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $this->studentRepo->update($request->all(),$id);
         //
     }
 

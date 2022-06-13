@@ -43,9 +43,9 @@ class StudentRepo
         
     }
 
-    public function update($data = [])
+    public function update($data = [],$id)
     {
-       return DB::table('sinhvien')->where('id',$data['id'])->update($data);
+       return DB::table('sinhvien')->where('id',$id)->update($data);
     }
 
     public function delete($id)

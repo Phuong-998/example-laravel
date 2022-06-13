@@ -21,7 +21,7 @@
         <tr>
             <td>{{ $result->id }}</td>
             <td><a href="{{ route('admin.detail-sinhvien',['id' => $result->id]) }}">{{ $result->name }}</a></td>
-            <td><img src="{{ asset('resize/100x100/'.$result->imgae) }}" alt=""></td>
+            <td><img src="{{ asset('storage/images/'.$result->imgae) }}" alt="" width="50px"></td>
             <td>{{ $result->age }}</td>
             <td>{{ $result->nameSub }}</td>
             <td>{{ $result->nameClass }}</td>
