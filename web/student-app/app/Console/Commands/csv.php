@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Repositories\StudentRepo;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\sinhvien;
 
@@ -31,43 +30,26 @@ class csv extends Command
      * @return int
      */
     protected $studentRepo;
-
     public function handle()
     {
         $this->studentRepo = new StudentRepo();
-        $path = base_path().'/public/data2.csv';
+        $path = base_path().'/public/test.csv';
         if(file_exists($path)){
-            $data = [];
+            $data = '';
             $file = new \SplFileObject($path);
             $file->setFlags(\SplFileObject::READ_CSV);
-            ini_set('memory_limit', '2048M');
             foreach($file as $value){
-                array_push($data,[
+                $data = [
                     'name' => $value[0],
                     'age' => $value[1],
                     'address' => $value[2],
                     'phone' => $value[3],
                     'id_monhoc' => $value[4],
-                    'id_lop' => $value[5],
-                    // 'avt' => $value[6],
-                    // 'a' => $value[7],
-                    // 'b' => $value[8],
-                    // 'c' => $value[9],
-                    // 'd' => $value[10],
-                    // 'abg' => $value[11],
-                    // 'qua' => $value[12],
-                    // 'nvb' => $value[13],
-                    // 'xc' => $value[14],
-                    // 'za' => $value[15],
-                    // 'vb' => $value[16],
-                    // 'ff' => $value[17]
-                ]);
+                    'id_lop' => $value[5]
+                ];
+                $insert[] = $data;
             }
-            $collection = collect($data);
-            $insert1 = $collection->chunk(1000);
-            foreach($insert1->toArray() as $value){ 
-                $this->studentRepo->add($value); 
-            }   
+            $this->studentRepo->add($insert);      
     }
 }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace app\Repositories;
 use Illuminate\Support\Facades\DB;
-use App\Models\monhoc;
+use app\Models\monhoc;
 
 class MonhocRepo 
 {
@@ -12,12 +12,9 @@ class MonhocRepo
 
     public function add($name)
     {
-        return monhoc::create([
+        return DB::table('monhoc')->insert([
             'nameSub' => $name
         ]);
-        // return DB::table('monhoc')->insert([
-        //     'nameSub' => $name
-        // ]);
     }
 
     public function getId($id)
