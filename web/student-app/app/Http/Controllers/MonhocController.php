@@ -16,7 +16,6 @@ class MonhocController extends Controller
     public function index()
     {
         $result = $this->monhocRepo->all();
-        dd($result);
         return view('monhoc.index',['result'=>$result]);
     }
 

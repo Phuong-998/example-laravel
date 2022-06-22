@@ -9,5 +9,5 @@ class monhoc extends Model
 {
     use HasFactory;
     protected $table = 'monhoc';
-    protected $fillabel = ['id','nameSub'];
+    protected $fillable = ['nameSub'];
 }
