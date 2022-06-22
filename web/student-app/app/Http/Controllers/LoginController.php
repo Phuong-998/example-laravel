@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 
@@ -24,29 +26,26 @@ class LoginController extends Controller
 
     public function getUser()
     {
-        $token = session('access_token');
-        if($token != null){
-            $response = Http::withToken($token)->get('localhost:8001/auth/user-profile');
-            if($response->json() != null){
-                return json_decode($response, true);
-            }else{
-                return response()->json([
-                    'message' => 'token expires'
-                ]);
+       try {
+            if(session('access_token') == null){
+                throw new Exception('Erro TOken');
             }
-           
-        }else{
-            return response()->json([
-                'message' => 'token_fail'
-            ]);
-        }
+            $token = session('access_token');
+            $response = Http::withToken($token)->get('localhost:8001/auth/user-profile');
+            return json_decode($response, true);
+       } catch (Exception $e){
+            echo $e->getMessage();
+       }
         
     }
 
     public function addSinhvien()
     {
-        $token = session('access_token');
-        if($token != null){
+        try {
+            if(session('access_token') == null){
+                throw new Exception('Erro TOken');
+            }
+            $token = session('access_token');
             $response = Http::withToken($token)->post('localhost:8001/auth/addInfo',[
                 'name' => 'bac',
                 'age' => '18',
@@ -56,20 +55,9 @@ class LoginController extends Controller
                 'id_monhoc' =>'1',
                 'id_lop' => '1'
             ]);
-            if($response->json() != null){
-                return json_decode($response, true);
-            }else{
-                return response()->json([
-                    'message' => 'token expires'
-                ]);
-            }
-           
-        }else{
-            return response()->json([
-                'message' => 'token_fail'
-            ]);
+        } catch (Exception $e){
+            echo $e->getMessage();
         }
     }
-
     //
 }
