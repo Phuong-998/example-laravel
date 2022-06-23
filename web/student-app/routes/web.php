@@ -6,6 +6,7 @@ use App\Http\Controllers\MonhocController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Api\LopApiController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ZohoController;
 use Intervention\Image\Gd\Commands\RotateCommand;
 
 /*
@@ -51,4 +52,6 @@ Route::prefix('/admin')->as('admin.')->group(function(){
     Route::get('/getUser',[LoginController::class,'getUser'])->name('getUser');
     Route::get('/addSinhvien',[LoginController::class,'addSinhvien'])->name('addSinhvien');
 });
+
+Route::post('hadnel',[ZohoController::class,'hadnel']);
 
